@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/lucas.pardinho/Documents/pessoal/pokemon-tcg -not -path */node_modules/* -not -path */.git/* -not -path */.next/* -not -path */dist/* -type f)"
+    ]
+  }
+}
