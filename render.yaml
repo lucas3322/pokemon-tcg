@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: pokemon-tcg-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: node dist/index.js
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: JWT_SECRET
+        generateValue: true
+      - key: POKEMON_TCG_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: pokemon-tcg-db
+          property: connectionString
+
+  - type: web
+    name: pokemon-tcg-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: pokemon-tcg-backend
+          property: host
+
+databases:
+  - name: pokemon-tcg-db
+    databaseName: pokemon_tcg
+    user: pokemon
+    plan: free
